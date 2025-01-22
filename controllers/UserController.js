@@ -3,8 +3,7 @@ const UserModel = require("../models/UserModel")
 
 class UserController {
     constructor(){}
-
-    
+ 
  createUser = async (req, res, next) => {
     if(!req.body.name || !req.body.email) {
      return res.status(400).json('Email and name are required')

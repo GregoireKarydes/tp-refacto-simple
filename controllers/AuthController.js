@@ -59,8 +59,8 @@ class AuthController {
         return res.status(200).json(user)
     }
 
-    #generateToken = async (payload) => {
-        const token =  jwt.sign(payload, process.env.JWT_TOKEN, { expiresIn: '1h' })
+    #generateToken = (payload) => {
+        return jwt.sign(payload, process.env.JWT_TOKEN, { expiresIn: '1h' })
     }
 }
 
