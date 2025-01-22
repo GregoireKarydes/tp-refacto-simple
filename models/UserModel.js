@@ -1,4 +1,4 @@
-const { DataTypes, UUIDV4 } = require("sequelize");
+const { DataTypes, UUIDV4, UUID } = require("sequelize");
 const DbConfigurator = require("../config/Database");
 
 

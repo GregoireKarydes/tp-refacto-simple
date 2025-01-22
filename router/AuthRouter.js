@@ -1,36 +1,15 @@
 
 const express = require('express');
-const UserModel = require('../models/UserModel');
 const authRouter = express.Router();
-const bcrypt = require('bcryptjs');
 const { validateSignupDto } = require('../dto/SignupDto');
+const { validateLoginDto } = require('../dto/LoginDto');
+const { AuthController } = require('../controllers/AuthController');
+const { authenticate } = require('../middlewares/AuthMiddleware');
+const authController = new AuthController()
 
 
-authRouter.post('/signup', validateSignupDto, async (req, res)=> {
-    const {name, email, password} = req.body
-    const userInDb = await UserModel.findOne({
-        where : {
-            email
-        }
-    })
-
-    if(userInDb) {
-        return res.status(400).json('Email already used')
-    }
-
-    const hash = bcrypt.hashSync(password, 11);
-
-    const user = await UserModel.create({
-        name,
-        email, 
-        password : hash
-    })
-    
-    return res.status(201).json(user)
-}) 
-
-
-
-
+authRouter.post('/signup', validateSignupDto, authController.signup)
+authRouter.post('/login', validateLoginDto, authController.login )
+authRouter.get('/me', authenticate, authController.getMe)
 
 module.exports = {authRouter}

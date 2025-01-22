@@ -2,16 +2,14 @@ require('dotenv').config()
 const app = require('express')()
 const bodyParser = require('body-parser')
 const DbConfigurator = require('./config/Database');
-const { authenticate } = require('./middlewares/AuthMiddleware');
-const { userRouter } = require('./router/UserRouter');
-const { authRouter } = require('./router/AuthRouter');
+const { publicRouter } = require('./router/PublicRouter');
+const { privateRouter } = require('./router/PrivateRouter');
 
 const start = async () => {
     await new DbConfigurator().connect()
     app.use(bodyParser.json())
-    app.use(authRouter)
-    app.use(authenticate)
-    app.use(userRouter)
+    app.use(publicRouter)
+    app.use(privateRouter)
     app.use('*', (req, res) => {
         res.status(404).json('Not found')
     })

@@ -1,9 +1,20 @@
 
+const jwt = require('jsonwebtoken')
+
 authenticate = (req, res, next) => {
-        if(process.env.PASSWORD !== req.headers.authorization) {
-            return res.status(401).json("Le password est différent ou non défini")
-        }
-        next()
+    const token = req.headers.authorization
+    if(!token) {
+        return res.status(401).json('Token not provided')
+    }
+    try {
+        jwt.verify(token, process.env.JWT_TOKEN)
+    } catch (error) {
+        return res.status(401).json('Invalid token')
+    }
+
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    req.user = decodedToken.id
+    next()
 }
 
 
