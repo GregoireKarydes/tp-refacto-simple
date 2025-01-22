@@ -1,33 +1,28 @@
-const { Sequelize } = require("sequelize");
-
+const { Sequelize } = require('sequelize');
 
 class DbConfigurator {
-    constructor(){
+    constructor() {
         this.sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
             host: process.env.DB_HOST,
-            dialect:  'postgres',
-            logging : false
-          });
+            dialect: 'postgres',
+            logging: false,
+        });
     }
 
     getSequelize = () => {
-        return this.sequelize
-    }
+        return this.sequelize;
+    };
 
     connect = async () => {
         try {
-            const UserModel = require("../models/UserModel");
+            const UserModel = require('../models/UserModel');
             await this.sequelize.authenticate();
-            await UserModel.sync({alter : true})
-            console.log('Connexion to database successful')
+            await UserModel.sync({ alter: true });
+            console.log('Connexion to database successful');
         } catch (error) {
-            console.log('Impossible to connect to the DB', error)
-        }   
-    }
-
+            console.log('Impossible to connect to the DB', error);
+        }
+    };
 }
 
-module.exports = DbConfigurator
-
-
-
+module.exports = DbConfigurator;
