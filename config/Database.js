@@ -5,7 +5,8 @@ class DbConfigurator {
     constructor(){
         this.sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
             host: process.env.DB_HOST,
-            dialect:  'postgres' 
+            dialect:  'postgres',
+            logging : false
           });
     }
 
@@ -18,7 +19,7 @@ class DbConfigurator {
             const UserModel = require("../models/UserModel");
             await this.sequelize.authenticate();
             await UserModel.sync({alter : true})
-            console.log('Co ok to db')
+            console.log('Connexion to database successful')
         } catch (error) {
             console.log('Impossible to connect to the DB', error)
         }   

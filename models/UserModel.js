@@ -20,6 +20,10 @@ const UserModel = sequelize.define(
         type: DataTypes.STRING,
         allowNull: false,
       },
+      password : {
+        type : DataTypes.STRING,
+        allowNull : false
+      },
       avatar : {
         type : DataTypes.STRING,
         allowNull : true
